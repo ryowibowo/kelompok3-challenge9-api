@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { user_game_biodata } = require('../models');
 
 const result = ["Draw", "Player Win", "COM Win"]
 //Result from rng function stored here
@@ -25,9 +25,9 @@ const rps = () => {
     return suitResult = result[1]
 }
 
-//Random Number and determining Choice of COM using Math.Floor with the number 0-4
+//Random Number and determining Choice of COM using Math.Floor with the number 0-3
 const rng = () => {
-    let numberResult = Math.floor(Math.random() * 5);
+    let numberResult = Math.floor(Math.random() * 4);
     if (numberResult == 0) {
         return comResult = "Rock"
     }
@@ -38,9 +38,6 @@ const rng = () => {
         return comResult = "Scissor"
     }
     if (numberResult == 3) {
-        return comResult = losingSuit
-    }
-    if (numberResult == 4) {
         return comResult = losingSuit
     }
 }
@@ -65,8 +62,8 @@ const runRps = async (req, res) => {
         }
 
         //Grab the user from database based on JWT
-        let currentUser = await User.findOne({
-            where: { username: req.user.username }
+        let currentUser = await user_game_biodata.findOne({
+            where: { user_id: parseInt(req.user.id,10) }
         }).then(user => { return user });
         //Grab the score of the user
         let playerScore = currentUser.score;
@@ -87,10 +84,10 @@ const runRps = async (req, res) => {
         }
 
         //Update the player score to the database
-        User.update({
+        user_game_biodata.update({
             score: playerScore
         },
-            { where: { username: currentUser.username } }
+            { where: { user_id: req.user.id } }
         )
         //Send the result to client side
         res.json({

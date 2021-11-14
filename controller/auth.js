@@ -139,7 +139,7 @@ const login = async(req, res) => {
     const result = {
         status: "Success",
         message: "Login Berhasil",
-        data: user
+        accessToken: generateToken(user)
     };
     return res.json(result);
 }
