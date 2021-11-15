@@ -25,7 +25,7 @@ const generateToken = (user) => {
     }
 
     // Rahasia ini nantinya kita pakai untuk memverifikasi apakah token ini benar-benar berasal dari aplikasi kita
-    const rahasia = 'Ini rahasia ga boleh disebar-sebar';
+    const rahasia = process.env.SECRET_KEY;
 
     // Membuat token dari data-data diatas
     return jwt.sign(payload, rahasia);

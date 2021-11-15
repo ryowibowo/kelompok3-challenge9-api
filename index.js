@@ -2,6 +2,9 @@
 const express = require('express');
 const app = express();
 
+//import dotenv
+const dotenv = require('dotenv').config();
+
 // import passport
 const passport = require('./lib/passport');
 
