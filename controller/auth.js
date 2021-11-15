@@ -6,9 +6,19 @@ const jwt = require('jsonwebtoken');
 
 const { user_games, user_game_biodata } = require('../models');
 
+const lc = require('lower-case')
+
 // method untuk menyimpan password dalam bentuk hash
 const encrypt = (password) => {
     return bcrypt.hashSync(password, 10);
+}
+
+const lowerCU = (username) => {
+    return lc.lowerCase(username)
+}
+
+const lowerCE = (email) => {
+    return lc.lowerCase(email)
 }
 
 // method untuk membandingkan password dalam bentuk hash & plain text
@@ -45,21 +55,48 @@ const format = (user) => {
 const register = async(req, res) => {
     // ambil username, password, dan role dari request body
     const { username, password, nama, email, umur } = req.body;
+    const lowerCUS = lowerCU(username)
+    const lowerCEM = lowerCE(email)
 
+    try {
+        if(req.body.username == "" || req.body.password == "") {
+            return res.status(404).json("Di Isi Terlebih Dahulu")
+        }
+    }
+    catch (err) {
+        return res.status(404).json(err)
+    }
     try {
         // cek apakah user sudah ada
         const user = await user_games.findOne({
-            where: { username }
+            where: { username: lowerCUS  }
         });
 
         // jika user ditemukan
-        if (user) {
-            return res.json('Username Telah Terdaftar');
+        if (user) {       
+            return res.status(404).json('Username Telah Terdaftar');
         }
 
+
     } catch (err) {
-        return res.json(err);
+        return res.status(404).json(err)
     }
+
+    try {
+        const data = await user_game_biodata.findOne({
+            where: { email: lowerCEM }
+        })
+
+        if (data) {
+            return res.status(404).json('E-mail sudah terdaftar')
+        }
+
+        
+    }
+    catch(err) {
+        return res.status(404).json(err)
+    }
+
 
     try {
         // mengubah password menjadi hash
@@ -90,9 +127,7 @@ const register = async(req, res) => {
         return res.json(result);
 
     } catch (err) {
-        return res.json({
-            status: "failed",
-        })
+        return res.status(400).json(err)
 
     }
 }
