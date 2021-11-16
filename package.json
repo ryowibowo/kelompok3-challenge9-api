@@ -1,0 +1,35 @@
+{
+    "name": "chapter-9-backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon index",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ryowibowo/kelompok3-challenge9-api.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ryowibowo/kelompok3-challenge9-api/issues"
+    },
+    "homepage": "https://github.com/ryowibowo/kelompok3-challenge9-api#readme",
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "express-validator": "^6.13.0",
+        "jsonwebtoken": "^8.5.1",
+        "passport": "^0.5.0",
+        "passport-jwt": "^4.0.0",
+        "pg": "^8.7.1",
+        "sequelize": "^6.9.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.15"
+    }
+}
