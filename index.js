@@ -21,9 +21,6 @@ app.use(passport.initialize());
 // import routes
 const router = require('./routes');
 
-
-
-
 // use route
 app.use(router);
 
