@@ -5,18 +5,22 @@ const app = express();
 //import dotenv
 const dotenv = require('dotenv').config();
 
-// import passport
-const passport = require('./lib/passport');
-
 // get port from env, if env not set, use 3000
 const port = process.env.port || 4000;
-
-// import routes
-const router = require('./routes');
 
 // use middleware for request parsing
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+// import passport
+const passport = require('./lib/passport');
+
+
+
+// import routes
+const router = require('./routes');
+
+
 
 // use passport for jwt auth
 app.use(passport.initialize());
