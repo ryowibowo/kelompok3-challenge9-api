@@ -14,7 +14,8 @@ app.use(express.json());
 
 // import passport
 const passport = require('./lib/passport');
-
+// use passport for jwt auth
+app.use(passport.initialize());
 
 
 // import routes
@@ -22,8 +23,6 @@ const router = require('./routes');
 
 
 
-// use passport for jwt auth
-app.use(passport.initialize());
 
 // use route
 app.use(router);
