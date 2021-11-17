@@ -5,5 +5,6 @@ const read = require('../controller/read')
 
 
 router.get('/infoPlayer/:id', read.read)
+router.get('/infoPlayer/', read.readAll)
 
 module.exports = router;
