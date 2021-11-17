@@ -62,6 +62,19 @@ const register = async(req, res) => {
     }
 
     try {
+        const data = await user_game_biodata.findOne({
+            where: { email }
+        })
+
+        if (data) {
+            return res.json('E-mail sudah terdaftar')
+        }
+    }
+    catch(err) {
+        return res.json(err)
+    }
+
+    try {
         // mengubah password menjadi hash
         const encryptedPassword = encrypt(password);
 
