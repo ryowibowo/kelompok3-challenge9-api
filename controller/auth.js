@@ -58,18 +58,26 @@ const register = async(req, res) => {
     const lowerCUS = lowerCU(username)
     const lowerCEM = lowerCE(email)
     try {
+        if (req.body.username == "" || req.body.password == "") {
+            return res.status(404).json("Di Isi Terlebih Dahulu")
+        }
+    } catch (err) {
+        return res.status(404).json(err)
+    }
+    try {
         // cek apakah user sudah ada
         const user = await user_games.findOne({
-            where: { username: lowerCUS  }
+            where: { username: lowerCUS }
         });
 
         // jika user ditemukan
-        if (user) {       
-            return res.json('Username Telah Terdaftar');
+        if (user) {
+            return res.status(404).json('Username Telah Terdaftar');
         }
 
+
     } catch (err) {
-        return res.json(err);
+        return res.status(404).json(err)
     }
 
     try {
@@ -78,12 +86,14 @@ const register = async(req, res) => {
         })
 
         if (data) {
-            return res.json('E-mail sudah terdaftar')
+            return res.status(404).json('E-mail sudah terdaftar')
         }
+
+
+    } catch (err) {
+        return res.status(404).json(err)
     }
-    catch(err) {
-        return res.json(err)
-    }
+
 
     try {
         // mengubah password menjadi hash
@@ -114,9 +124,7 @@ const register = async(req, res) => {
         return res.json(result);
 
     } catch (err) {
-        return res.json({
-            status: "failed",
-        })
+        return res.status(400).json(err)
 
     }
 }
