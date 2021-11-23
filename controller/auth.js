@@ -146,7 +146,7 @@ const login = async(req, res) => {
             where: { username }
         })
     } catch (err) {
-        return res.json(err);
+        return res.status(400).json(err)
     }
 
     // cek apakah user tidak ditemukan
@@ -155,7 +155,7 @@ const login = async(req, res) => {
             status: "Failed",
             message: "User Tidak Ditemukan"
         };
-        return res.json(result);
+        return res.status(404).json(result);
     }
 
     // bandingkan password dari request body dengan dari database
@@ -167,7 +167,7 @@ const login = async(req, res) => {
             status: "Failed",
             message: "Password Salah"
         };
-        return res.json(result);
+        return res.status(400).json(result);
     }
 
     // jika sesuai
