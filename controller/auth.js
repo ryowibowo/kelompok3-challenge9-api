@@ -65,6 +65,13 @@ const register = async(req, res) => {
         return res.status(404).json(err)
     }
     try {
+        if (req.body.username == "" || req.body.password == "") {
+            return res.status(404).json("Di Isi Terlebih Dahulu")
+        }
+    } catch (err) {
+        return res.status(404).json(err)
+    }
+    try {
         // cek apakah user sudah ada
         const user = await user_games.findOne({
             where: { username: lowerCUS }
@@ -79,6 +86,21 @@ const register = async(req, res) => {
     } catch (err) {
         return res.status(404).json(err)
     }
+
+    try {
+        const data = await user_game_biodata.findOne({
+            where: { email: lowerCEM }
+        })
+
+        if (data) {
+            return res.status(404).json('E-mail sudah terdaftar')
+        }
+
+
+    } catch (err) {
+        return res.status(404).json(err)
+    }
+
 
     try {
         const data = await user_game_biodata.findOne({
@@ -143,7 +165,7 @@ const login = async(req, res) => {
             where: { username }
         })
     } catch (err) {
-        return res.json(err);
+        return res.status(400).json(err)
     }
 
     // cek apakah user tidak ditemukan
@@ -152,7 +174,7 @@ const login = async(req, res) => {
             status: "Failed",
             message: "User Tidak Ditemukan"
         };
-        return res.json(result);
+        return res.status(404).json(result);
     }
 
     // bandingkan password dari request body dengan dari database
@@ -164,7 +186,7 @@ const login = async(req, res) => {
             status: "Failed",
             message: "Password Salah"
         };
-        return res.json(result);
+        return res.status(400).json(result);
     }
 
     // jika sesuai
