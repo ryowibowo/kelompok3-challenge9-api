@@ -4,6 +4,7 @@ const restrict = require('../middlewares/restrict')
 const read = require('../controller/read')
 
 
-router.get('/infoPlayer',restrict, read.read)
+router.get('/infoPlayer/:id', read.read)
+router.get('/infoPlayer/', read.readAll)
 
 module.exports = router;
