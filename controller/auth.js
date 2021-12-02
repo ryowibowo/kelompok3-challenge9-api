@@ -22,7 +22,7 @@ const lowerCE = (email) => {
 }
 
 // method untuk membandingkan password dalam bentuk hash & plain text
-const checkPassword = (password, encryptedPassword, ) => {
+const checkPassword = (password, encryptedPassword,) => {
     return bcrypt.compareSync(password, encryptedPassword);
 }
 
@@ -52,34 +52,46 @@ const format = (user) => {
 }
 
 // controller register
-const register = async(req, res) => {
+const register = async (req, res) => {
     // ambil username, password, dan role dari request body
     const { username, password, nama, email, umur } = req.body;
     const lowerCUS = lowerCU(username)
     const lowerCEM = lowerCE(email)
 
     try {
-        if(req.body.username == "" || req.body.password == "") {
-            return res.status(404).json("Di Isi Terlebih Dahulu")
+        if (req.body.username == "" || req.body.password == "") {
+            return res.status(409).json({
+                "status": "error",
+                "message": "blank username or password"
+            })
         }
     }
     catch (err) {
-        return res.status(404).json(err)
+        return res.status(409).json({
+            "status": "error",
+            "message": err
+        })
     }
     try {
         // cek apakah user sudah ada
         const user = await user_games.findOne({
-            where: { username: lowerCUS  }
+            where: { username: lowerCUS }
         });
 
         // jika user ditemukan
-        if (user) {       
-            return res.status(404).json('Username Telah Terdaftar');
+        if (user) {
+            return res.status(409).json({
+                "status": "error",
+                "message": 'Username Telah Terdaftar'
+            });
         }
 
 
     } catch (err) {
-        return res.status(404).json(err)
+        return res.status(409).json({
+            "status": "error",
+            "message": err
+        })
     }
 
     try {
@@ -88,13 +100,19 @@ const register = async(req, res) => {
         })
 
         if (data) {
-            return res.status(404).json('E-mail sudah terdaftar')
+            return res.status(409).json({
+                "status": "error",
+                "message": "email sudah terdaftar"
+            })
         }
 
-        
+
     }
-    catch(err) {
-        return res.status(404).json(err)
+    catch (err) {
+        return res.status(409).json({
+            "status": "error",
+            "message": err
+        })
     }
 
 
@@ -127,13 +145,15 @@ const register = async(req, res) => {
         return res.json(result);
 
     } catch (err) {
-        return res.status(400).json(err)
-
+        return res.status(409).json({
+            "status": "error",
+            "message": err
+        })
     }
 }
 
 // controller login
-const login = async(req, res) => {
+const login = async (req, res) => {
     // ambil username dan password dari request body
     const { username, password } = req.body;
 
@@ -146,7 +166,10 @@ const login = async(req, res) => {
             where: { username }
         })
     } catch (err) {
-        return res.status(400).json(err)
+        return res.status(409).json({
+            "status": "error",
+            "message": err
+        })
     }
 
     // cek apakah user tidak ditemukan
@@ -155,7 +178,7 @@ const login = async(req, res) => {
             status: "Failed",
             message: "User Tidak Ditemukan"
         };
-        return res.status(404).json(result);
+        return res.status(409).json(result);
     }
 
     // bandingkan password dari request body dengan dari database
@@ -167,14 +190,15 @@ const login = async(req, res) => {
             status: "Failed",
             message: "Password Salah"
         };
-        return res.status(400).json(result);
+        return res.status(409).json({result});
     }
 
     // jika sesuai
     const result = {
         status: "Success",
         message: "Login Berhasil",
-        accessToken: generateToken(user)
+        accessToken: generateToken(user),
+        username:username
     };
     return res.json(result);
 }

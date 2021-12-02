@@ -23,7 +23,10 @@ const read = async (req, res) => {
     }
 
     catch (err) {
-        return res.json(err)
+        return res.status(409).json({
+            "status":"error",
+            "message":err
+        })
     }
 }
 
@@ -57,7 +60,10 @@ const readAll = async (req, res) => {
     }
 
     catch (err) {
-        return res.json(err)
+        return res.status(409).json({
+            "status":"error",
+            "message":err
+        })
     }
 }
 
