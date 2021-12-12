@@ -58,16 +58,16 @@ const forgotP = async(req, res, next) => {
                 })
                 
                 // console.log(link);
-                return res.json('Link reset password sudah di kirim')
+                return res.status(202).json('Link reset password sudah di kirim')
             }
             if(!data) {
-                return res.json("E-mail not found" )
+                return res.status(406).json("E-mail not found" )
             }
         })
     }
 
     catch(err) {
-        return res.json(err)
+        return res.status(400).json(err)
     }
 }
 
@@ -90,22 +90,22 @@ const resetP = async (req, res, next) => {
         .then((data) => {
             console.log(data)
             if(!data) {
-                return res.json("Id tidak ada")
+                return res.stats(406).json("Id tidak ada")
             }
             if (data) {
                 const secret = JWT_SECRET 
                 const payload = jwt.verify(token, secret)
-                const { password, password2 } = req.body
+                const { password, confirmP } = req.body
                 const encryptedPassword = encrypt(password);
-                if(password !== password2) {
-                    return res.json("password tidak sama")
+                if(password !== confirmP) {
+                    return res.status(406).json("password tidak sama")
                 }
-                if(password == password2) {
+                if(password == confirmP) {
                     user_games.update({
                         password: encryptedPassword,
                     }, {where: {id: req.params.id}})
                     .then(() => {
-                        return res.json("berhasil ganti password")
+                        return res.status(202).json("berhasil ganti password")
                     })
                 }
             }
@@ -114,7 +114,7 @@ const resetP = async (req, res, next) => {
     }
 
     catch (err) {
-        return res.json(err)
+        return res.stats(400).json(err)
     }
 }
 

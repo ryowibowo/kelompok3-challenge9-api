@@ -10,7 +10,7 @@ const read = async (req, res) => {
                 as: 'user_game_biodata'
             }
         }).then((results) => {
-            res.json({
+            res.status(200).json({
                 "user_id": results.id,
                 "username":results.username,
                 "nama": results.user_game_biodata.nama,
@@ -23,10 +23,7 @@ const read = async (req, res) => {
     }
 
     catch (err) {
-        return res.status(409).json({
-            "status":"error",
-            "message":err
-        })
+        return res.status(400).json(err)
     }
 }
 
@@ -55,15 +52,12 @@ const readAll = async (req, res) => {
         }
         console.log(result[0])
         console.log(data)
-        res.json(data)
+        res.status(200).json(data)
 
     }
 
     catch (err) {
-        return res.status(409).json({
-            "status":"error",
-            "message":err
-        })
+        return res.status(400).json(err)
     }
 }
 

@@ -11,7 +11,7 @@ const runRps = async (req, res) => {
     try {
         //Check if the Input is Valid or not first
         if (suitResult.toLowerCase() != "win" && suitResult.toLowerCase() != "lose" ) {
-            return res.send("Invalid Input")
+            return res.status(406).send("Invalid Input")
         }
 
         //Grab the user from database based on JWT
@@ -45,7 +45,7 @@ const runRps = async (req, res) => {
     }
 
     catch (err) {
-        res.json(err)
+        res.status(409).json({err})
     }
 }
 
