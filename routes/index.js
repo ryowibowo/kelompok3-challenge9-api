@@ -10,7 +10,7 @@ const read = require('./read')
 const forgot = require('./forgotPass')
 // routes list
 router.use('/auth', auth);
-router.use('/rps',rps)
+router.use('/score',rps)
 router.use('/', update)
 router.use('/', read)
 router.use('/', forgot)

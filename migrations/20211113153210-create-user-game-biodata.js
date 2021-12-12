@@ -6,7 +6,8 @@ module.exports = {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
+                unique:true
             },
             user_id: {
                 type: Sequelize.INTEGER,
@@ -22,7 +23,8 @@ module.exports = {
                 type: Sequelize.STRING
             },
             email: {
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+                unique:true
             },
             umur: {
                 type: Sequelize.INTEGER
