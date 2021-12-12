@@ -22,7 +22,7 @@ const lowerCE = (email) => {
 }
 
 // method untuk membandingkan password dalam bentuk hash & plain text
-const checkPassword = (password, encryptedPassword,) => {
+const checkPassword = (password, encryptedPassword, ) => {
     return bcrypt.compareSync(password, encryptedPassword);
 }
 
@@ -52,46 +52,34 @@ const format = (user) => {
 }
 
 // controller register
-const register = async (req, res) => {
+const register = async(req, res) => {
     // ambil username, password, dan role dari request body
     const { username, password, nama, email, umur } = req.body;
     const lowerCUS = lowerCU(username)
     const lowerCEM = lowerCE(email)
 
     try {
-        if (req.body.username == "" || req.body.password == "") {
-            return res.status(409).json({
-                "status": "error",
-                "message": "blank username or password"
-            })
+        if(req.body.username == "" || req.body.password == "") {
+            return res.status(406).json("Di Isi Terlebih Dahulu")
         }
     }
     catch (err) {
-        return res.status(409).json({
-            "status": "error",
-            "message": err
-        })
+        return res.status(400).json(err)
     }
     try {
         // cek apakah user sudah ada
         const user = await user_games.findOne({
-            where: { username: lowerCUS }
+            where: { username: lowerCUS  }
         });
 
         // jika user ditemukan
-        if (user) {
-            return res.status(409).json({
-                "status": "error",
-                "message": 'Username Telah Terdaftar'
-            });
+        if (user) {       
+            return res.status(406).json('Username Telah Terdaftar');
         }
 
 
     } catch (err) {
-        return res.status(409).json({
-            "status": "error",
-            "message": err
-        })
+        return res.status(400).json(err)
     }
 
     try {
@@ -100,19 +88,13 @@ const register = async (req, res) => {
         })
 
         if (data) {
-            return res.status(409).json({
-                "status": "error",
-                "message": "email sudah terdaftar"
-            })
+            return res.status(406).json('E-mail sudah terdaftar')
         }
 
-
+        
     }
-    catch (err) {
-        return res.status(409).json({
-            "status": "error",
-            "message": err
-        })
+    catch(err) {
+        return res.status(400).json(err)
     }
 
 
@@ -140,20 +122,23 @@ const register = async (req, res) => {
         const result = {
             status: "success",
             message: "Register Berhasil",
-            data: user
+            data: {
+                username,
+                nama,
+                email,
+                umur
+            }
         };
-        return res.json(result);
+        return res.status(201).json(result);
 
     } catch (err) {
-        return res.status(409).json({
-            "status": "error",
-            "message": err
-        })
+        return res.status(400).json(err)
+
     }
 }
 
 // controller login
-const login = async (req, res) => {
+const login = async(req, res) => {
     // ambil username dan password dari request body
     const { username, password } = req.body;
 
@@ -166,10 +151,7 @@ const login = async (req, res) => {
             where: { username }
         })
     } catch (err) {
-        return res.status(409).json({
-            "status": "error",
-            "message": err
-        })
+        return res.status(400).json(err)
     }
 
     // cek apakah user tidak ditemukan
@@ -178,7 +160,7 @@ const login = async (req, res) => {
             status: "Failed",
             message: "User Tidak Ditemukan"
         };
-        return res.status(409).json(result);
+        return res.status(406).json(result);
     }
 
     // bandingkan password dari request body dengan dari database
@@ -190,17 +172,16 @@ const login = async (req, res) => {
             status: "Failed",
             message: "Password Salah"
         };
-        return res.status(409).json({result});
+        return res.status(406).json(result);
     }
 
     // jika sesuai
     const result = {
         status: "Success",
         message: "Login Berhasil",
-        accessToken: generateToken(user),
-        username:username
+        accessToken: generateToken(user)
     };
-    return res.json(result);
+    return res.status(202).json(result);
 }
 
 module.exports = {

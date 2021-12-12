@@ -6,12 +6,11 @@ let suitResult = "";
 //Run the game
 const runRps = async (req, res) => {
     suitResult=req.body.result
-    username=req.user.username
 
     try {
         //Check if the Input is Valid or not first
         if (suitResult.toLowerCase() != "win" && suitResult.toLowerCase() != "lose" ) {
-            return res.send("Invalid Input")
+            return res.status(406).send("Invalid Input")
         }
 
         //Grab the user from database based on JWT
@@ -36,16 +35,14 @@ const runRps = async (req, res) => {
             { where: { user_id: req.user.id } }
         )
         //Send the result to client side
-        res.json({
-            "status":"sucess",
-            "username":username,
+        res.status(202).json({
             "hasilSuit": suitResult,
             "score": playerScore
         })
     }
 
     catch (err) {
-        res.json(err)
+        res.status(400).json(err)
     }
 }
 
