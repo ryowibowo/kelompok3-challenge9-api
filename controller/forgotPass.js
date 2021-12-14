@@ -30,7 +30,7 @@ const forgotP = async(req, res, next) => {
                 }
             
                 const token = jwt.sign(payload, secret, { expiresIn: '15m'})
-                const link = `https://client-kel3.herokuapp.com/reset-password/${data.id}/${token}`
+                const link = `https://nextjs-kel3.herokuapp.com/reset-password/${data.id}/${token}`
                 
                 const smtpConfig = {
                     host: "smtp.Gmail.com",
