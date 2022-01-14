@@ -1,27 +1,28 @@
-'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  class user_game_biodata extends Model {
+  class UserGameBiodata extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate() {
       // define association here
     }
-  };
-  user_game_biodata.init({
+  }
+  UserGameBiodata.init({
     user_id: DataTypes.INTEGER,
     nama: DataTypes.STRING,
     email: DataTypes.STRING,
     umur: DataTypes.INTEGER,
-    score: DataTypes.INTEGER
+    score: DataTypes.INTEGER,
+    url: DataTypes.STRING,
   }, {
     sequelize,
-    modelName: 'user_game_biodata',
+    modelName: 'UserGameBiodata',
   });
-  return user_game_biodata;
+  return UserGameBiodata;
 };
