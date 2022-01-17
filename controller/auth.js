@@ -16,9 +16,10 @@ const lowerCU = (username) => lc.lowerCase(username);
 const lowerCE = (email) => lc.lowerCase(email);
 
 // method untuk membandingkan password dalam bentuk hash & plain text
-const checkPassword = (password, encryptedPassword) => {
-  bcrypt.compareSync(password, encryptedPassword);
-};
+const checkPassword = (
+  password,
+  encryptedPassword,
+) => bcrypt.compareSync(password, encryptedPassword);
 
 // method untuk membuat token jwt
 const generateToken = (user) => {
@@ -175,7 +176,7 @@ const login = async (req, res) => {
     accessToken: generateToken(user),
     usernameLogin: username,
   };
-  return res.json(result);
+  return res.status(202).json(result);
 };
 
 module.exports = {
