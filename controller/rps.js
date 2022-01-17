@@ -1,52 +1,48 @@
-const { user_game_biodata } = require('../models');
+const { userGameBiodata } = require('../models');
 
-//Result from Suit
-let suitResult = "";
-
-//Run the game
+// Run the game
 const runRps = async (req, res) => {
-    suitResult=req.body.result
-    username=req.user.username
+  const suitResult = req.body.result;
+  const { username } = req.user;
 
-    try {
-        //Check if the Input is Valid or not first
-        if (suitResult.toLowerCase() != "win" && suitResult.toLowerCase() != "lose" ) {
-            return res.status(406).send("Invalid Input")
-        }
-
-        //Grab the user from database based on JWT
-        let currentUser = await user_game_biodata.findOne({
-            where: { user_id: parseInt(req.user.id,10) }
-        }).then(user => { return user });
-        //Grab the score of the user
-        let playerScore = currentUser.score;
-
-        //Add or deduct score from player
-        if (suitResult == "win") {
-            playerScore += 1
-        }
-        if (suitResult == "lose") {
-            playerScore -= 1
-        }
-
-        //Update the player score to the database
-        user_game_biodata.update({
-            score: playerScore
-        },
-            { where: { user_id: req.user.id } }
-        )
-        //Send the result to client side
-        res.json({
-            "status":"sucess",
-            "username":username,
-            "hasilSuit": suitResult,
-            "score": playerScore
-        })
+  try {
+    // Check if the Input is Valid or not first
+    if (suitResult.toLowerCase() !== 'win' && suitResult.toLowerCase() !== 'lose') {
+      return res.status(406).send('Invalid Input');
     }
 
-    catch (err) {
-        res.status(409).json({err})
+    // Grab the user from database based on JWT
+    const currentUser = await userGameBiodata.findOne({
+      where: { user_id: parseInt(req.user.id, 10) },
+    }).then((user) => user);
+    // Grab the score of the user
+    let playerScore = currentUser.score;
+
+    // Add or deduct score from player
+    if (suitResult === 'win') {
+      playerScore += 1;
     }
-}
+    if (suitResult === 'lose') {
+      playerScore -= 1;
+    }
+
+    // Update the player score to the database
+    userGameBiodata.update(
+      {
+        score: playerScore,
+      },
+      { where: { user_id: req.user.id } },
+    );
+    // Send the result to client side
+    return res.status(200).json({
+      status: 'sucess',
+      username,
+      hasilSuit: suitResult,
+      score: playerScore,
+    });
+  } catch (err) {
+    return res.status(409).json({ err });
+  }
+};
 
 module.exports = runRps;
