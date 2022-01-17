@@ -15,6 +15,9 @@ const runRps = async (req, res) => {
     const currentUser = await userGameBiodata.findOne({
       where: { user_id: parseInt(req.user.id, 10) },
     }).then((user) => user);
+    if (!currentUser) {
+      return res.status(406).json({ status: 'error', message: 'user not found' });
+    }
     // Grab the score of the user
     let playerScore = currentUser.score;
 
@@ -41,7 +44,7 @@ const runRps = async (req, res) => {
       score: playerScore,
     });
   } catch (err) {
-    return res.status(409).json({ err });
+    return res.status(409).json({ status: 'error', message: 'database error' });
   }
 };
 
