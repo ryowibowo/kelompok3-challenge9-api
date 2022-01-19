@@ -38,13 +38,13 @@ const runRps = async (req, res) => {
     );
     // Send the result to client side
     return res.status(200).json({
-      status: 'sucess',
+      status: 'success',
       username,
       hasilSuit: suitResult,
       score: playerScore,
     });
   } catch (err) {
-    return res.status(409).json({ status: 'error', message: 'database error' });
+    return res.status(409).json({ status: 'error', message: err });
   }
 };
 
