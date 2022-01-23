@@ -1,10 +1,10 @@
 const { UserGames, UserGameBiodata } = require('../models');
 
+// eslint-disable-next-line consistent-return
 const read = async (req, res) => {
-  let user = {};
-
   try {
-    UserGames.findOne({
+    let user = {};
+    await UserGames.findOne({
       where: { id: req.params.id },
       include: {
         model: UserGameBiodata,
@@ -12,26 +12,23 @@ const read = async (req, res) => {
       },
     }).then((results) => {
       user = {
+        ...user,
         user_id: results.id,
         username: results.username,
-        nama: results.userGameBiodata.nama,
-        email: results.userGameBiodata.email,
-        umur: results.userGameBiodata.umur,
-        score: results.userGameBiodata.score,
+        nama: results.UserGameBiodata.nama,
+        email: results.UserGameBiodata.email,
+        umur: results.UserGameBiodata.umur,
+        score: results.UserGameBiodata.score,
+        url: results.UserGameBiodata.url,
       };
     });
+    return res.status(200).json(user);
   } catch (err) {
     return res.status(400).json(err);
   }
-
-  if (!user) {
-    return res.status(400).json({ status: 'error', message: 'user not found!' });
-  } return res.status(200).json({ user });
 };
 
 const readAll = async (req, res) => {
-  const users = [];
-
   try {
     const result = await UserGames.findAll({
       raw: true,
@@ -42,24 +39,23 @@ const readAll = async (req, res) => {
       },
     });
 
-    for (let i = 0; i < result.length; i = +1) {
+    const data = [];
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < result.length; i++) {
       const myObj = {
         user_id: result[i].id,
         username: result[i].username,
-        nama: result[i].userGameBiodata.nama,
-        email: result[i].userGameBiodata.email,
-        umur: result[i].userGameBiodata.umur,
-        score: result[i].userGameBiodata.score,
+        nama: result[i].UserGameBiodata.nama,
+        email: result[i].UserGameBiodata.email,
+        umur: result[i].UserGameBiodata.umur,
+        score: result[i].UserGameBiodata.score,
       };
-      users.push(myObj);
+      data.push(myObj);
     }
+    return res.status(200).json(data);
   } catch (err) {
     return res.status(400).json(err);
   }
-
-  if (!users) {
-    return res.status(400).json({ status: 'error', message: 'no users were found!' });
-  } return res.status(200).json(users);
 };
 
 module.exports = {

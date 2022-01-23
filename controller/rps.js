@@ -1,4 +1,4 @@
-const { userGameBiodata } = require('../models');
+const { UserGameBiodata } = require('../models');
 
 // Run the game
 const runRps = async (req, res) => {
@@ -8,11 +8,11 @@ const runRps = async (req, res) => {
   try {
     // Check if the Input is Valid or not first
     if (suitResult.toLowerCase() !== 'win' && suitResult.toLowerCase() !== 'lose') {
-      return res.status(406).send('Invalid Input');
+      return res.status(406).json('Invalid Input');
     }
 
     // Grab the user from database based on JWT
-    const currentUser = await userGameBiodata.findOne({
+    const currentUser = await UserGameBiodata.findOne({
       where: { user_id: parseInt(req.user.id, 10) },
     }).then((user) => user);
     if (!currentUser) {
@@ -30,7 +30,7 @@ const runRps = async (req, res) => {
     }
 
     // Update the player score to the database
-    userGameBiodata.update(
+    UserGameBiodata.update(
       {
         score: playerScore,
       },
@@ -38,13 +38,13 @@ const runRps = async (req, res) => {
     );
     // Send the result to client side
     return res.status(200).json({
-      status: 'sucess',
+      status: 'success',
       username,
       hasilSuit: suitResult,
       score: playerScore,
     });
   } catch (err) {
-    return res.status(409).json({ status: 'error', message: 'database error' });
+    return res.status(409).json({ status: 'error', message: err });
   }
 };
 
