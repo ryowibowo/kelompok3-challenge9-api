@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 // import jwt untuk membuat token
 const jwt = require('jsonwebtoken');
 const lc = require('lower-case');
+const { checkPW } = require('../lib/checkPW');
 
 const { UserGames, UserGameBiodata } = require('../models');
 // method untuk menyimpan password dalam bentuk hash
@@ -16,10 +17,10 @@ const lowerCU = (username) => lc.lowerCase(username);
 const lowerCE = (email) => lc.lowerCase(email);
 
 // method untuk membandingkan password dalam bentuk hash & plain text
-const checkPassword = (
-  password,
-  encryptedPassword,
-) => bcrypt.compareSync(password, encryptedPassword);
+// const checkPassword = (
+//   password,
+//   encryptedPassword,
+// ) => bcrypt.compareSync(password, encryptedPassword);
 
 // method untuk membuat token jwt
 const generateToken = (user) => {
@@ -29,7 +30,7 @@ const generateToken = (user) => {
     username: user.username,
   };
 
-  const rahasia = process.env.SECRET_KEY;
+  const rahasia = 'Ini rahasia ga boleh disebar-sebar';
   // Membuat token dari data-data diatas
   return jwt.sign(payload, rahasia);
 };
@@ -125,7 +126,7 @@ const register = async (req, res) => {
       message: 'Register Berhasil',
       data: user,
     };
-    return res.status(200).json(result);
+    return res.status(202).json(result);
   } catch (err) {
     return res.status(409).json(err);
   }
@@ -158,7 +159,7 @@ const login = async (req, res) => {
   }
 
   // bandingkan password dari request body dengan dari database
-  const isPasswordValid = checkPassword(password, user.password);
+  const isPasswordValid = checkPW(password, user.password);
 
   // jika tidak sesuai
   if (!isPasswordValid) {

@@ -1,9 +1,11 @@
 const auth = require('../controller/auth');
-const bcrypt = require('bcrypt')
+const update = require('../controller/update')
+const { encrypt } = require('../lib/hashing')
+const { checkPW } = require('../lib/checkPW')
 const { UserGames, UserGameBiodata } = require('../models')
 
-const mockRequest = (body = {},user={}) => {
-    return { body,user }
+const mockRequest = (body = {}) => {
+    return { body }
 };
 
 const mockResponse = () => {
@@ -20,12 +22,22 @@ jest.mock('../models/index.js', () => ({
     UserGames: {
         findOne: jest.fn(),
         create: jest.fn(),
+        update: jest.fn(),
     },
     UserGameBiodata: {
         findOne: jest.fn(),
+        update: jest.fn(),
     }
   })
 );
+
+jest.mock('../lib/checkPW', () => ({
+    checkPW: jest.fn(),
+}));
+
+jest.mock('../lib/hashing', () => ({
+    encrypt: jest.fn(),
+}));
 
 describe('auth.register function', () => {
     test('res.json called with { status: error, message: "blank username or password" }', async () => {
@@ -72,7 +84,9 @@ describe('auth.register function', () => {
     test('res.json called with { status: success, message: "Register Berhasil" }', async () => {
         const req = mockRequest({ username: 'asd', password: 'asd', email: 'asd', nama: 'asd', umur: 24, score: 0});
         const res = mockResponse();
-
+        UserGames.findOne.mockResolvedValueOnce()
+        UserGameBiodata.findOne.mockResolvedValueOnce()
+        UserGames.findOne.mockResolvedValueOnce({ username: 'asd', password: 'asd', email: 'asd', nama: 'asd', umur: 24, score: 0})
         await auth.register(req, res);
 
         expect(res.status).toBeCalledWith(202);
@@ -83,49 +97,40 @@ describe('auth.register function', () => {
     });
 });
 
+// describe('update.postUpdate function', () => {
+//     test('res.json called with { status: success }', async () => {
+//         const password = 'asd'
+//         const req = mockRequest({ username: 'asd23', password , email: 'asd', nama: 'asd', umur: 24, score: 0});
+//         const res = mockResponse();
+//         encrypt.mockReturnValueOnce('qwerty');
+//         UserGames.findOne.mockResolvedValueOnce({ username: 'jkjk' });
+//         UserGames.update.mockResolvedValueOnce();
+//         UserGameBiodata.update.mockResolvedValueOnce();
+
+//         await update.postUpdate(req, res)
+
+//         // expect(res.status).toBeCalledWith(202);
+//         expect(res.json).toBeCalledWith({
+//             status: 'success'
+//         });
+//     });
+// });
+
 describe('auth.login function', () => {
 
-    // test('res.json called with { status: Failed, message: "User Tidak Ditemukan" }', async () => {
-    //     const req = mockRequest({ username: 'sad', password: 'asd'});
-    //     const res = mockResponse();
-    //     UserGames.findOne.mockResolvedValueOnce({ username: 'asd', password: 'asd'})
-
-    //     await auth.login(req, res);
-
-    //     expect(res.status).toBeCalledWith(409);
-    //     expect(res.json).toBeCalledWith({
-    //         status:'Failed',
-    //         message: 'User Tidak Ditemukan'
-    //     });
-    // });
-
-    // test('res.json called with { status: Failed, message: "Password Salah" }', async () => {
-    //     const req = mockRequest({ username: 'asd', password: 'sad'});
-    //     const res = mockResponse();
-    //     UserGames.findOne.mockResolvedValueOnce({ username: 'asd', password: 'asd'})
-
-    //     await auth.login(req, res);
-
-    //     expect(res.status).toBeCalledWith(409);
-    //     expect(res.json).toBeCalledWith({
-    //         status:'Failed',
-    //         message: 'Password Salah'
-    //     });
-    // });
-
     test('res.json called with { status: success, message: "Login Berhasil"}', async () => {
+        const password = '$2b$10$.JAWvXgQu4NgMhRKfbfeIeeyReIKmUl8zIWaB2W/CsrNugfAIFv2q'
         const req = mockRequest({ username: 'asd', password: 'asd'});
         const res = mockResponse();
-        UserGames.findOne.mockResolvedValueOnce({ username: 'asd', password: 'asd'});
+        UserGames.findOne.mockResolvedValueOnce({ username: 'asd', password });
+        checkPW(password, req.password);
 
         await auth.login(req, res);
 
-        
+        expect(res.status).toBeCalledWith(202);
         expect(res.json).toBeCalledWith({
             status:'success',
             message: 'Login Berhasil',
         });
-        expect(res.status).toBeCalledWith(202);
     });
 });
-
