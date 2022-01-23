@@ -1,14 +1,14 @@
-const { userGames, userGameBiodata } = require('../models');
+const { UserGames, UserGameBiodata } = require('../models');
 
 const read = async (req, res) => {
   let user = {};
 
   try {
-    userGames.findOne({
+    UserGames.findOne({
       where: { id: req.params.id },
       include: {
-        model: userGameBiodata,
-        as: 'userGameBiodata',
+        model: UserGameBiodata,
+        as: 'UserGameBiodata',
       },
     }).then((results) => {
       user = {
@@ -33,12 +33,12 @@ const readAll = async (req, res) => {
   const users = [];
 
   try {
-    const result = await userGames.findAll({
+    const result = await UserGames.findAll({
       raw: true,
       nest: true,
       include: {
-        model: userGameBiodata,
-        as: 'userGameBiodata',
+        model: UserGameBiodata,
+        as: 'UserGameBiodata',
       },
     });
 
