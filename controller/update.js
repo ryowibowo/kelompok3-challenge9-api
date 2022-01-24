@@ -1,8 +1,7 @@
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const lc = require('lower-case');
+const { encrypt } = require('../lib/hashing');
 const { UserGames, UserGameBiodata } = require('../models');
-
-const encrypt = (password) => bcrypt.hashSync(password, 10);
 
 const lowerCU = (username) => lc.lowerCase(username);
 
@@ -25,7 +24,7 @@ const getUpdate = async (req, res) => {
 
 const postUpdate = async (req, res) => {
   const {
-    username, password, nama, email, umur,
+    username, password, nama, email, umur, url,
   } = req.body;
   const encryptedPassword = encrypt(password);
   const lowerCUS = lowerCU(username);
@@ -55,6 +54,7 @@ const postUpdate = async (req, res) => {
           nama,
           email,
           umur,
+          url,
         }, { where: { user_id: req.user.id } });
       });
     const result = {

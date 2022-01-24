@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77% </span>
+                <span class="strong">62.56% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>144/187</span>
+                <span class='fraction'>117/187</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.82% </span>
+                <span class="strong">69.23% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/17</span>
+                <span class='fraction'>9/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/7</span>
+                <span class='fraction'>4/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77% </span>
+                <span class="strong">62.56% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>144/187</span>
+                <span class='fraction'>117/187</span>
             </div>
         
             
@@ -386,41 +386,41 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -572,43 +572,43 @@ const register = async (req, res) =&gt; {
 };
 &nbsp;
 // controller login
-const login = async (req, res) =&gt; {
-  // ambil username dan password dari request body
-  const { username, password } = req.body;
-&nbsp;
-  // siapkan variable penampung user
-  let user = {};
-&nbsp;
-  try {
-    // cari user berdasar username
-    user = await UserGames.findOne({
-      where: { username },
-    });
-  } <span class="branch-0 cbranch-no" title="branch not covered" >catch (err) {</span>
+const login = <span class="fstat-no" title="function not covered" >async (req, res) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  // ambil username dan password dari request body</span>
+<span class="cstat-no" title="statement not covered" >  const { username, password } = req.body;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  // siapkan variable penampung user</span>
+<span class="cstat-no" title="statement not covered" >  let user = {};</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    // cari user berdasar username</span>
+<span class="cstat-no" title="statement not covered" >    user = await UserGames.findOne({</span>
+<span class="cstat-no" title="statement not covered" >      where: { username },</span>
+<span class="cstat-no" title="statement not covered" >    });</span>
+<span class="cstat-no" title="statement not covered" >  } catch (err) {</span>
 <span class="cstat-no" title="statement not covered" >    return res.status(409).json(err);</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-&nbsp;
-  // cek apakah user tidak ditemukan
-  if (!user) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  // cek apakah user tidak ditemukan</span>
+<span class="cstat-no" title="statement not covered" >  if (!user) {</span>
 <span class="cstat-no" title="statement not covered" >    const result = {</span>
 <span class="cstat-no" title="statement not covered" >      status: 'Failed',</span>
 <span class="cstat-no" title="statement not covered" >      message: 'User Tidak Ditemukan',</span>
 <span class="cstat-no" title="statement not covered" >    };</span>
 <span class="cstat-no" title="statement not covered" >    return res.status(409).json(result);</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-&nbsp;
-  // bandingkan password dari request body dengan dari database
-  const isPasswordValid = checkPW(password, user.password);
-&nbsp;
-  // jika tidak sesuai
-  if (!isPasswordValid) {
-    const result = {
-      status: 'Failed',
-      message: 'Password Salah',
-    };
-    return res.status(409).json({ result });
-  }
-<span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  // bandingkan password dari request body dengan dari database</span>
+<span class="cstat-no" title="statement not covered" >  const isPasswordValid = checkPW(password, user.password);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  // jika tidak sesuai</span>
+<span class="cstat-no" title="statement not covered" >  if (!isPasswordValid) {</span>
+<span class="cstat-no" title="statement not covered" >    const result = {</span>
+<span class="cstat-no" title="statement not covered" >      status: 'Failed',</span>
+<span class="cstat-no" title="statement not covered" >      message: 'Password Salah',</span>
+<span class="cstat-no" title="statement not covered" >    };</span>
+<span class="cstat-no" title="statement not covered" >    return res.status(409).json({ result });</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  // jika sesuai</span>
 <span class="cstat-no" title="statement not covered" >  const result = {</span>
 <span class="cstat-no" title="statement not covered" >    status: 'Success',</span>
@@ -631,7 +631,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Mon Jan 24 2022 01:34:27 GMT+0700 (Western Indonesia Time)
+                at Mon Jan 24 2022 19:34:34 GMT+0700 (Western Indonesia Time)
             </div>
         <script src="prettify.js"></script>
         <script>
