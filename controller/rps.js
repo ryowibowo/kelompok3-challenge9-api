@@ -3,22 +3,21 @@ const { UserGameBiodata } = require('../models');
 // Run the game
 const runRps = async (req, res) => {
   const suitResult = req.body.result;
-  const { username } = req.user;
+  const { username, id } = req.user;
 
   try {
     // Check if the Input is Valid or not first
     if (suitResult.toLowerCase() !== 'win' && suitResult.toLowerCase() !== 'lose') {
       return res.status(406).json('Invalid Input');
     }
-
     // Grab the user from database based on JWT
     const currentUser = await UserGameBiodata.findOne({
-      where: { user_id: parseInt(req.user.id, 10) },
+      where: { user_id: parseInt(id, 10) },
     }).then((user) => user);
-    if (!currentUser) {
+    // Grab the score of the user
+    if (!username || !id) {
       return res.status(406).json({ status: 'error', message: 'user not found' });
     }
-    // Grab the score of the user
     let playerScore = currentUser.score;
 
     // Add or deduct score from player
