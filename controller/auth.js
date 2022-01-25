@@ -30,7 +30,7 @@ const generateToken = (user) => {
     username: user.username,
   };
 
-  const rahasia = 'Ini rahasia ga boleh disebar-sebar';
+  const rahasia = process.env.SECRET_KEY;
   // Membuat token dari data-data diatas
   return jwt.sign(payload, rahasia);
 };

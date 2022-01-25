@@ -40,3 +40,29 @@ module.exports={
     }
   }
 }
+
+// module.exports = {
+
+//   development: {
+//     username: 'postgres',
+//     password: 'babehlo123',
+//     database: 'project1',
+//     host: 'localhost',
+//     dialect: 'postgres',
+//   },
+//   test: {
+//     username: 'postgres',
+//     password: 'babehlo123',
+//     database: 'project1_test',
+//     host: 'localhost',
+//     dialect: 'postgres',
+//   },
+//   production: {
+//     username: 'postgres',
+//     password: 'babehlo123',
+//     database: 'project1_production',
+//     host: 'localhost',
+//     dialect: 'postgres',
+//   },
+
+// };
