@@ -2,7 +2,7 @@
   "name": "chapter-9-backend",
   "version": "1.0.0",
   "engines":{
-    "node": "16.x"
+    "node": "16.9.1"
   },
   "description": "",
   "main": "index.js",
